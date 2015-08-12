@@ -60,6 +60,7 @@ gulp.task('serve', ['compileSass', 'watchFiles']);
 /** delete dist folder */
 gulp.task('clean', function() {
   del([options.dist]);
+  del(['.publish']);
   // delete compiles css and map
   del([options.src + 'css/main.css*']);
 });
@@ -68,10 +69,10 @@ gulp.task('clean', function() {
 gulp.task('build', ['html', 'assets'])
 
 /** Deploy to github page */
-gulp.task('deploy', function() {
+gulp.task('deploy', ['build'], function() {
   return gulp.src(options.dist + '**/*')
-             .pipe(pages());
-})
+            .pipe(pages());
+});
 
 gulp.task('default', ['clean'], function(){
   gulp.start('build');
